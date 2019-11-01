@@ -40,7 +40,7 @@ Verkefni sett fyrir í fyrirlestri mánudaginn 28. október 2019.
 
 ## Skil
 
-Skila skal undir „Verkefni og hlutaprófa“ á Uglu í seinasta lagi fyrir lok dags þriðjudaginn 7. nóvember 2019.
+Skila skal undir „Verkefni og hlutaprófa“ á Uglu í seinasta lagi fyrir lok dags fimmtudaginn 7. nóvember 2019.
 
 Skilaboð skulu innihalda:
 
