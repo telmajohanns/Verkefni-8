@@ -12,6 +12,15 @@ const text = (() => {
 
   function init(_form, _items) {
     items = _items;
+    for (let item of items.querySelectorAll('.item__checkbox')) {
+      item.addEventListener('click', finish);
+    } 
+    for (let item of items.querySelectorAll('.item__text')) {
+      item.addEventListener('click', edit);
+    }
+    for (let item of items.querySelectorAll('.item__button')) {
+      item.addEventListener('click', deleteItem);
+    }
     _form.addEventListener('submit', formHandler);
 
     // TODO láta hluti í _items virka
@@ -25,10 +34,13 @@ const text = (() => {
 
   // event handler fyrir það að klára færslu
   function finish(e) {
+    e.target.parentNode.classList.toggle('item--done');
   }
 
   // event handler fyrir það að breyta færslu
   function edit(e) {
+    var value = e.target.innerText;
+    var elem = e.target.parentElement;
   }
 
   // event handler fyrir það að klára að breyta færslu
@@ -41,6 +53,7 @@ const text = (() => {
 
   // event handler til að eyða færslu
   function deleteItem(e) {
+    e.target.parentElement.remove();
   }
 
   // hjálparfall til að útbúa element
