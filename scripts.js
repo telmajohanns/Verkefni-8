@@ -1,4 +1,10 @@
 const ENTER_KEYCODE = 13;
+const CLASSES = {
+  NODE: 'item',
+  CHECKBOX: 'item__checkbox',
+  TEXT: 'item__text',
+  BUTTON: 'item__button'
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('.form');
@@ -28,36 +34,73 @@ const text = (() => {
 
   function formHandler(e) {
     e.preventDefault();
-
-    console.log('halló heimur');
+    const form = e.currentTarget;
+    const formInput = form.querySelector('.form__input');
+    add(formInput.value);
+    formInput.value = '';
   }
 
   // event handler fyrir það að klára færslu
   function finish(e) {
-    e.target.parentNode.classList.toggle('item--done');
+    if(e.target.checked){
+      e.target.parentElement.className += ' item--done';
+    }
+    else{
+      e.target.parentElement.className = 'item';
+    }
   }
 
   // event handler fyrir það að breyta færslu
   function edit(e) {
-    var value = e.target.innerText;
-    var elem = e.target.parentElement;
+    let inp = el('INPUT', CLASSES.TEXT);
+    inp.value = e.target.textContent;
+    inp.addEventListener('keyup', (e) => {
+      if(e.keyCode === ENTER_KEYCODE)
+        commit(e);
+    });
+    e.target.parentNode.replaceChild(inp, e.target);
+    inp.focus();
   }
 
   // event handler fyrir það að klára að breyta færslu
   function commit(e) {
+    const value = e.target.value;
+    const span = el('SPAN', CLASSES.TEXT, edit);
+    span.appendChild(document.createTextNode(value));
+    e.target.parentNode.replaceChild(span, e.target);
   }
 
   // fall sem sér um að bæta við nýju item
   function add(value) {
+    const node = el('LI', CLASSES.NODE);
+        
+    let checkbox = el('INPUT', CLASSES.CHECKBOX, finish);
+    checkbox.setAttribute('type', 'checkbox');
+    node.appendChild(checkbox);
+
+    const span = el('SPAN', CLASSES.TEXT, edit);
+    span.appendChild(document.createTextNode(value));
+    node.appendChild(span);
+    
+    const btn = el('BUTTON', CLASSES.BUTTON, deleteItem);
+    btn.appendChild(document.createTextNode('Eyða'));
+    node.appendChild(btn);
+
+    items.appendChild(node);
   }
 
   // event handler til að eyða færslu
   function deleteItem(e) {
-    e.target.parentElement.remove();
+    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
   }
 
   // hjálparfall til að útbúa element
   function el(type, className, clickHandler) {
+    let item = document.createElement(type);
+    item.className += className;
+    if(clickHandler)
+      item.addEventListener('click', clickHandler);
+    return item;
   }
 
   return {
